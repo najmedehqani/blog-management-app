@@ -1,0 +1,430 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    &,
+    &.light-mode {
+      --background-app-rgb: 250, 250, 251;
+      /* Primary — confident indigo. Anchor 900 = #4338CA (rich, high white-contrast). */
+      --color-primary-900: 67, 56, 202;
+      --color-primary-800: 79, 70, 229;
+      --color-primary-700: 99, 102, 241;
+      --color-primary-600: 129, 140, 248;
+      --color-primary-500: 165, 180, 252;
+      --color-primary-400: 199, 210, 254;
+      --color-primary-300: 224, 231, 255;
+      --color-primary-200: 233, 237, 255;
+      --color-primary-100: 238, 242, 255;
+      --color-primary-50: 245, 247, 255;
+      --color-secondary-900: 17, 24, 39;
+      --color-secondary-800: 31, 41, 55;
+      --color-secondary-700: 55, 65, 81;
+      --color-secondary-600: 75, 85, 99;
+      --color-secondary-500: 107, 114, 128;
+      --color-secondary-400: 156, 163, 175;
+      --color-secondary-300: 209, 213, 219;
+      --color-secondary-200: 229, 231, 235;
+      --color-secondary-100: 243, 244, 246;
+      --color-secondary-50: 249, 250, 251;
+      --color-secondary-0: 255, 255, 255;
+      --color-success: 0, 192, 115;
+      --color-warning: 255, 153, 0;
+      --color-error: 255, 71, 87;
+      --color-red-500: 239, 68, 68;
+      --color-red-300: 252, 165, 165;
+    }
+    &.dark-mode {
+      /* Midnight ink — one cohesive indigo-tinted dark family (not neutral zinc).
+         The app background is the darkest note; surfaces lift by lightness for
+         elevation. Ordering matches light mode's scale so every component keeps
+         its intended contrast. */
+      --background-app-rgb: 15, 17, 25;
+      /* Primary stays a luminous indigo — kept light enough that the button
+         invert (dark text on bg-primary-900) remains legible. */
+      --color-primary-900: 129, 140, 248;
+      --color-primary-800: 139, 150, 250;
+      --color-primary-700: 165, 180, 252;
+      --color-primary-600: 183, 197, 253;
+      --color-primary-500: 199, 210, 254;
+      --color-primary-400: 165, 180, 252;
+      --color-primary-300: 99, 102, 241;
+      --color-primary-200: 79, 70, 229;
+      --color-primary-100: 55, 48, 163;
+      --color-primary-50: 49, 46, 129;
+      /* Secondary — cool ink ramp. 900 = near-white text, 0 = card surface. */
+      --color-secondary-900: 245, 246, 252;
+      --color-secondary-800: 233, 235, 245;
+      --color-secondary-700: 214, 217, 232;
+      --color-secondary-600: 190, 194, 214;
+      --color-secondary-500: 150, 156, 180;
+      --color-secondary-400: 112, 118, 142;
+      --color-secondary-300: 60, 66, 86;
+      --color-secondary-200: 42, 47, 64;
+      --color-secondary-100: 30, 34, 48;
+      --color-secondary-50: 20, 23, 33;
+      --color-secondary-0: 26, 30, 42;
+      --backdrop-color: 0, 0, 0;
+    }
+  }
+}
+
+.rti--container {
+  background-color: rgb(var(--color-secondary-100));
+  --rti-radius: 0.375rem;
+  --rti-s: 0.5rem;
+  --rti-tag: #edf2f7;
+  --rti-tag-remove: #e53e3e;
+  border: none;
+}
+.rti--container .rti--input {
+  background-color: rgb(var(--color-secondary-200));
+  color: rgb(var(--color-secondary-800));
+  padding: 0.3rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.rti--tag {
+  background-color: rgb(var(--color-secondary-500));
+  color: rgb(var(--color-secondary-100));
+}
+
+@layer components {
+  .form {
+    @apply flex flex-col gap-y-8 bg-secondary-0 p-4 rounded-xl w-full max-w-lg;
+  }
+  .textField__input {
+    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 
+    hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-[background-color,border-color,box-shadow] duration-300 
+    ease-out focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-black/60 dark:bg-secondary-200
+    focus:outline-none focus-visible:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0;
+  }
+  .textField--invalid > .textField__input {
+    @apply border-red-600;
+  }
+  .textField__input:has(option:checked[value=""]) {
+    @apply text-secondary-400;
+  }
+  .textField__input option[value=""] {
+    @apply text-secondary-400;
+  }
+  .textField__input option {
+    @apply text-secondary-700;
+  }
+  .btn {
+    @apply px-3 py-3 rounded-xl font-medium transition-all duration-200 ease-out
+    active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2
+    focus-visible:ring-primary-500 focus-visible:ring-offset-2
+    focus-visible:ring-offset-secondary-0;
+  }
+  .btn--primary {
+    @apply bg-primary-900 hover:bg-primary-700 text-secondary-100
+    shadow-sm shadow-primary-900/25 hover:shadow-md hover:shadow-primary-900/25;
+  }
+  .btn--secondary {
+    @apply bg-secondary-600 hover:bg-secondary-700 text-secondary-100;
+  }
+  .btn--outline {
+    @apply border border-secondary-300 text-secondary-500 hover:border-secondary-400
+    hover:text-secondary-700 hover:bg-secondary-100;
+  }
+  .btn--danger {
+    @apply border border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white;
+  }
+  .badge {
+    @apply inline-block whitespace-nowrap rounded-xl px-2 py-0.5;
+  }
+  .badge--primary {
+    @apply bg-primary-900 text-white;
+  }
+  .badge--secondary {
+    @apply bg-secondary-200 text-secondary-600;
+  }
+  .badge--success {
+    @apply bg-green-500 text-white;
+  }
+  .badge--danger {
+    @apply bg-red-500 text-white;
+  }
+  .search {
+    @apply w-full
+    sm:w-[85%] sm:focus-within:w-[90%]
+    md:w-[400px] md:focus-within:w-[440px]
+    lg:w-[460px] lg:focus-within:w-[520px];
+  }
+  .clickable-item {
+    @apply flex items-center gap-x-2 rounded-2xl font-medium hover:text-primary-900
+    hover:bg-primary-100/40 transition-all duration-200 text-secondary-700 py-3 px-4 pl-5;
+  }
+  .spinner {
+    margin: 3.2rem auto 3.2rem;
+    width: 60px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid rgb(var(--color-primary-900));
+    border-right-color: rgb(var(--color-primary-200));
+    animation: rotate 1s infinite linear;
+  }
+
+  .spinner-mini {
+    margin: 0 auto;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid rgb(var(--color-primary-900));
+    border-right-color: transparent;
+    animation: rotate 1s infinite linear;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  /* Hero signature: the accent phrase gets a hand-drawn indigo underline. */
+  .ink-stroke path {
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    animation: ink-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+  }
+  @keyframes ink-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+/* Hero animation */
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes heroFloatDelayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.animate-hero-float {
+  animation: heroFloat 4s ease-in-out infinite;
+}
+.animate-hero-float-delayed {
+  animation: heroFloatDelayed 4s ease-in-out 2s infinite;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Keyboard focus is always visible; pointer focus stays quiet. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid rgb(var(--color-primary-700));
+  outline-offset: 2px;
+}
+html {
+  scroll-behavior: smooth;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-vazir), system-ui, sans-serif;
+  min-height: 100vh;
+  background-color: rgb(var(--background-app-rgb));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Chrome (nav, buttons, labels) shouldn't be selectable; content should. */
+button,
+a,
+label,
+nav,
+th {
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+}
+button:disabled {
+  cursor: not-allowed;
+  background-color: rgb(var(--color-secondary-300), 0.5);
+  color: rgb(var(--color-secondary-700), 0.5);
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* inupt number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+/* TABLE */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+table .title-row {
+  background-color: rgb(var(--color-secondary-100));
+}
+
+table td,
+table th {
+  border-bottom: 1px solid rgb(var(--color-secondary-200));
+  text-align: right;
+  white-space: nowrap;
+}
+
+table th {
+  padding: 0.6rem 1rem;
+  color: rgb(var(--color-secondary-600));
+  font-size: 0.9rem;
+}
+a {
+  display: block;
+}
+table td {
+  font-size: 0.85rem;
+  padding: 1rem 1rem;
+  color: rgb(var(--color-secondary-600));
+}
+
+/* comment  indicator */
+
+.post-comments .post-comments__answer {
+  position: relative;
+}
+.post-comments .post-comments__answer::before {
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  right: -15px;
+  top: -13px;
+  width: 3px;
+  background-color: rgb(var(--color-secondary-200));
+}
+
+.post-comments .post-comments__answer .answer-item::before {
+  content: "";
+  display: block;
+  height: 3px;
+  position: relative;
+  right: -31px;
+  top: 57px;
+  width: 15px;
+  background-color: rgb(var(--color-secondary-200));
+  z-index: 10;
+}
+
+.post-comments .post-comments__answer .last-item:after {
+  content: "";
+  display: block;
+  height: calc(100% - 80px);
+  position: absolute;
+  right: -15px;
+  top: 76px;
+  width: 4px;
+  background-color: rgb(var(--color-secondary-200));
+}
+
+@media (max-width: 640px) {
+  .post-comments .post-comments__answer::before {
+    display: none;
+  }
+  .post-comments .post-comments__answer .answer-item::before {
+    width: 3px;
+    height: 14px;
+    right: 11px;
+    top: -13px;
+    position: absolute;
+  }
+}
+
+/* Slider */
+.custom-pagination .swiper-pagination-bullet {
+  background: rgb(var(--color-secondary-300));
+  opacity: 1;
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.custom-pagination .swiper-pagination-bullet:hover {
+  background: rgb(var(--color-secondary-400));
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  overflow: hidden;
+  background: rgb(var(--color-primary-900));
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .custom-pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/*  scrollbar */
+
+::-webkit-scrollbar {
+  background-color: rgb(var(--color-secondary-0));
+  height: 11px;
+  width: 11px;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--color-secondary-300));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-secondary-400));
+}
+::-webkit-scrollbar-track {
+  border-radius: 9999px;
+}
